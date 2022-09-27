@@ -60,7 +60,7 @@ public class MainClass {
                     userIndex = i;
                     System.out.println("You are a voter");
                     System.out.println(userIndex);
-
+                    // testing the commit thingy Benson
                     // Navigates to the voting page
                     Voter voterObject = new Voter();
                     voterObject.voterWindow();
