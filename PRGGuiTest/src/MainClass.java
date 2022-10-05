@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,7 +43,46 @@ public class MainClass {
         partyList.add(SWAPO);
         partyList.add(IPC);
         partyList.add(PDM);
+
         Scanner sc = new Scanner(System.in);
+
+        JPanel loginPanel = new JPanel();
+
+        JFrame loginFrame = new JFrame("Login");
+
+        loginFrame.setSize(650, 370);
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//        loginPanel.setBounds(0,0,325,370);
+//        loginPanel.setBackground(new Color(0,102,153));
+        loginPanel.setLayout(null);
+        loginFrame.add(loginPanel);
+
+        loginFrame.setVisible(true);
+
+        JLabel title = new JLabel("Login");
+        title.setBounds(350, 5, 120,30);
+        loginPanel.add(title);
+
+        JLabel uNameLabel = new JLabel("Username:");
+        uNameLabel.setBounds(340, 100, 120,30);
+        loginPanel.add(uNameLabel);
+
+        JLabel pwLabel = new JLabel("Password:");
+        pwLabel.setBounds(340, 140,120,30);
+        loginPanel.add(pwLabel);
+
+        JTextField unameInput = new JTextField();
+        unameInput.setBounds(420,105,170,25);
+        loginPanel.add(unameInput);
+
+        JPasswordField pwInput = new JPasswordField();
+        pwInput.setBounds(420,145,170,25);
+        loginPanel.add(pwInput);
+
+        JButton submit = new JButton("Submit");
+        submit.setBounds(450,200, 100, 30);
+        loginPanel.add(submit);
 
         System.out.println("\n++++++++++++++++++++++++++++++++++++++++++ \n" +
                 "\t \t \tLogin Window");
@@ -60,7 +101,6 @@ public class MainClass {
                     userIndex = i;
                     System.out.println("You are a voter");
                     System.out.println(userIndex);
-                    // testing the commit thingy Benson
                     // Navigates to the voting page
                     Voter voterObject = new Voter();
                     voterObject.voterWindow();
@@ -80,3 +120,5 @@ public class MainClass {
         loginMethod();
     }
 }
+
+//lets commit
