@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class MainClass implements ActionListener {
     public static user user1 = new user
             ("Benson",
@@ -61,7 +60,13 @@ public class MainClass implements ActionListener {
     public static JButton submit;
     public static JTextField uName;
     public static JPasswordField uPass;
-
+    public static JLabel invalid;
+    public static JPanel loginPanel;
+    public static JLabel title;
+    public static JLabel uNameLabel;
+    public static JLabel pwLabel;
+    public static JLabel image;
+public static JFrame loginFrame;
     public static void loginMethod() {
         userList.add(user1);
         userList.add(user2);
@@ -69,21 +74,20 @@ public class MainClass implements ActionListener {
         partyList.add(IPC);
         partyList.add(PDM);
 
-        Scanner sc = new Scanner(System.in);
-
-        JPanel loginPanel = new JPanel();
-
-        JFrame loginFrame = new JFrame("Login");
+        loginPanel = new JPanel();
+        loginPanel.setBackground(new Color(204,255,255));
+        loginFrame = new JFrame("Login");
 
         loginFrame.setSize(650, 370);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        loginPanel.setBounds(0,0,325,370);
-//        loginPanel.setBackground(new Color(0,102,153));
         loginPanel.setLayout(null);
         loginFrame.add(loginPanel);
 
-        loginFrame.setVisible(true);
+        image = new JLabel();
+        image.setIcon(new ImageIcon("C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//img.png"));
+        image.setBounds(0,0,313,338);
+        loginPanel.add(image);
 
         JLabel title = new JLabel("Login");
         title.setBounds(350, 5, 120, 30);
@@ -105,57 +109,42 @@ public class MainClass implements ActionListener {
         uPass.setBounds(420, 145, 170, 25);
         loginPanel.add(uPass);
 
+        invalid = new JLabel();
+        invalid.setBounds(50,50,200,25);
+        invalid.setForeground(Color.red);
+        loginPanel.add(invalid);
+
         submit = new JButton("Submit");
-        submit.setBounds(450, 200, 100, 30);
+        submit.setFont(new Font("Verdana", Font.PLAIN, 12));
+        submit.setBounds(430, 200, 100, 30);
         submit.addActionListener(new MainClass());
-        
         loginPanel.add(submit);
 
-//        System.out.println("\n++++++++++++++++++++++++++++++++++++++++++ \n" +
-//                "\t \t \tLogin Window");
-//        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-//        System.out.println("\nEnter username:");
-//        String uName = sc.next();
-//
-//        System.out.println("Enter password:");
-//        String uPass = sc.next();
-//
-//
-//        for (int i = 0; i < userList.size(); i++) {
-//            if (uName.equals(userList.get(i).username) && uPass.equals(userList.get(i).password)) {
-//                System.out.println("Valid Credentials");
-//                if (userList.get(i).role.equals("voter")) {
-//                    userIndex = i;
-//                    System.out.println("You are a voter");
-//                    System.out.println(userIndex);
-//                    // Navigates to the voting page
-//                    Voter voterObject = new Voter();
-//                    voterObject.voterWindow();
-//                    break;
-//                } else if (userList.get(i).role.equals("Rep")) System.out.println("You are a representative");{
-//                    // Navigates to the representative page
-//                    Representative repObject = new Representative();
-//                    repObject.repWindow();
-//                }
-//
-//            }
-//        }
-        ;
+        loginFrame.setVisible(true);
     }
 
-    @Override // something is up here idk what
-    public void actionPerformed(ActionEvent e) {
-        for (int i = 0; i < userList.size(); i++) {
-            if (uName.equals(userList.get(i).username) && uPass.equals(userList.get(i).password)) {
-                System.out.println("Valid Credentials");
-                if (userList.get(i).role.equals("voter")) {
-                    userIndex = i;
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+
+        String user = uName.getText();
+        String pw = String.valueOf(uPass.getPassword());
+
+        for (int i = 0; i < userList.size(); i++)
+        {
+            if (user.equals(userList.get(i).username) && pw.equals(userList.get(i).password))
+            {
+                //System.out.println("Valid Credentials");
+                userIndex = i;
+                if (userList.get(i).role.equals("voter"))
+                {
                     System.out.println("You are a voter");
                     System.out.println(userIndex);
 
                     // Navigates to the voting page
-                    Voter voterObject = new Voter();
-                    voterObject.voterWindow();
+                    VoterWindows voterWindowsObject = new VoterWindows();
+                    voterWindowsObject.voterWindow();
+                    loginFrame.dispose();
                     break;
                 } else if (userList.get(i).role.equals("Rep")) System.out.println("You are a representative");
                 {
@@ -165,8 +154,8 @@ public class MainClass implements ActionListener {
                 }
             }
         }
-    }
 
+    }
 
     public static void main(String[] args) {
         loginMethod();

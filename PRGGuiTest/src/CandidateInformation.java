@@ -18,12 +18,12 @@ public class CandidateInformation {
         String back = sc.next();
 
         if (back.equals("a") || back.equals("A")) {
-            Voter voterObject = new Voter();
-            voterObject.voterWindow();
+            VoterWindows voterWindowsObject = new VoterWindows();
+            voterWindowsObject.voterWindow();
         } else {
             System.out.println("Invalid option");
-            Voter voterObject = new Voter();
-            voterObject.voterWindow();
+            VoterWindows voterWindowsObject = new VoterWindows();
+            voterWindowsObject.voterWindow();
         }
     }
 }
