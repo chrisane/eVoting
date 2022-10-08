@@ -2,15 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 
 public class MainClass implements ActionListener {
     public static user user1 = new user
             ("Benson",
                     "Ntemo",
-                    "bbenbast",
-                    "ntemo111",
+                    "b",
+                    "n",
                     "voter",
                     "Central",
                     false);
@@ -89,15 +89,19 @@ public static JFrame loginFrame;
         image.setBounds(0,0,313,338);
         loginPanel.add(image);
 
-        JLabel title = new JLabel("Login");
-        title.setBounds(350, 5, 120, 30);
+        title = new JLabel("Login");
+        title.setFont(new Font("Verdana", Font.BOLD, 18));
+        title.setBounds(340, 15, 120, 30);
         loginPanel.add(title);
 
-        JLabel uNameLabel = new JLabel("Username:");
+        uNameLabel = new JLabel("Username:");
+        uNameLabel.setFont(new Font("Helvetica", Font.PLAIN, 12));
         uNameLabel.setBounds(340, 100, 120, 30);
         loginPanel.add(uNameLabel);
 
-        JLabel pwLabel = new JLabel("Password:");
+
+        pwLabel = new JLabel("Password:");
+        pwLabel.setFont(new Font("Helvetica", Font.PLAIN, 12));
         pwLabel.setBounds(340, 140, 120, 30);
         loginPanel.add(pwLabel);
 
@@ -146,18 +150,24 @@ public static JFrame loginFrame;
                     voterWindowsObject.voterWindow();
                     loginFrame.dispose();
                     break;
-                } else if (userList.get(i).role.equals("Rep")) System.out.println("You are a representative");
+                } else if (userList.get(i).role.equals("Rep"))
                 {
                     // Navigates to the representative page
                     Representative repObject = new Representative();
                     repObject.repWindow();
+                    loginFrame.dispose();
+                }
+                else
+                {
+                    invalid.setText("Invalid Entry");
                 }
             }
         }
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         loginMethod();
     }
 }
