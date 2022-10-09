@@ -11,10 +11,14 @@ public class VoterInformation {
     public static JLabel separator;
     public static JLabel mainLabel;
     public static JButton back;
+    public static JButton candInfo;
+    public static JButton logout;
+    public  static int userIndex;
 
     public static void votersInformation(String name,  String surname, String votingDistricts, boolean hasVoted){
         panel = new JPanel();
         panel.setBackground(new Color(204, 255, 255));
+        panel.setLayout(null);
 
         menuPanel = new JPanel();
         menuPanel.setBounds(0, 0, 190, 400);
@@ -30,22 +34,23 @@ public class VoterInformation {
 
         // Adds logo image
         logo = new JLabel();
-        logo.setIcon(new ImageIcon("C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//small-logo.png"));
+        String logoPath = "C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//small-logo.png";
+        logo.setIcon(new ImageIcon(logoPath));
         logo.setBounds(50, 20, 91, 59);
         menuPanel.add(logo);
 
         // Main Label
         mainLabel = new JLabel("My Profile");
-        mainLabel.setFont(new Font("Verdana", Font.BOLD, 18));
+        mainLabel.setFont(new Font("Verdana", Font.BOLD, 25));
         mainLabel.setBounds(220, 5, 300, 50);
         panel.add(mainLabel);
 
         separator = new JLabel("_______________________________________________________");
-        separator.setBounds(220, 73, 400, 20);
+        separator.setBounds(220, 50, 400, 20);
         panel.add(separator);
 
         // // Go back to previous window
-        back = new JButton("Back");
+        back = new JButton("Home");
         back.setFont(new Font("Verdana", Font.PLAIN, 12));
         back.setBounds(25, 120, 140, 30);
         back.addActionListener(
@@ -55,42 +60,59 @@ public class VoterInformation {
                 });
         menuPanel.add(back);
 
+        // // Candidate info
+        candInfo = new JButton("Candidate Info");
+        candInfo.setFont(new Font("Verdana", Font.PLAIN, 12));
+        candInfo.setBounds(25, 170, 140, 30);
+        candInfo.addActionListener(
+                (ActionListener) e -> {
+                    CandidateInformation.candidateInformation();
+                    frame.dispose();
+                });
+        menuPanel.add(candInfo);
 
+        // // Logout
+        logout = new JButton("Log Out");
+        logout.setFont(new Font("Verdana", Font.PLAIN, 12));
+        logout.setBounds(25, 220, 140, 30);
+        logout.addActionListener(
+                (ActionListener) e -> {
+                    MainClass.loginMethod();
+                    frame.dispose();
+                });
+        menuPanel.add(logout);
 
+        // Profile Content
+        // // Name
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(220,90,300,30);
+        panel.add(nameLabel);
 
+        JLabel uName = new JLabel(name);
+        uName.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        uName.setBounds(280, 90, 300, 30);
+        panel.add(uName);
 
+        // // Surname
+        JLabel snameLabel = new JLabel("Surname:");
+        snameLabel.setBounds(220,120,300,30);
+        panel.add(snameLabel);
 
+        JLabel uSName = new JLabel(surname);
+        uSName.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        uSName.setBounds(300, 120, 300, 30);
+        panel.add(uSName);
 
+        // // District
+        JLabel bioLabel = new JLabel("Voting District:");
+        bioLabel.setBounds(220,150, 300,30);
+        panel.add(bioLabel);
 
+        JLabel bio1 = new JLabel(votingDistricts);
+        bio1.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        bio1.setBounds(325, 150, 300,30);
+        panel.add(bio1);
 
-
-
-
-
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("\n \t Personal Information\n");
-//        System.out.println("+++++++++++++++++++++++++++++++++");
-//        System.out.println("Name: \t \t \t \t" + name
-//                            + "\nSurname: \t \t \t" + surname
-//                            + "\nVoting District: \t" + votingDistricts);
-//
-//        // Returns whether voter has voted or not
-//        if(!hasVoted) System.out.println("\nVoting Status: \tYou have not voted yet");
-//        else System.out.println("\nVoting Status: \tYou have voted\n");
-//
-//        // Allows user to go back to previous state/window
-//        System.out.println("\nSelect [a] to go back to previous window");
-//        String back = sc.next();
-//
-//        if (back.equals("a") || back.equals("A")) {
-//            VoterWindows voterWindowsObject = new VoterWindows();
-//            voterWindowsObject.voterWindow();
-//        } else {
-//            System.out.println("Invalid option");
-//            VoterWindows voterWindowsObject = new VoterWindows();
-//            voterWindowsObject.voterWindow();
-//        }
         frame.setVisible(true);
     }
 }

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class VoterWindows {
     public static JLabel logo;
@@ -48,14 +47,15 @@ public class VoterWindows {
 
         // Adds logo image
         logo = new JLabel();
-        logo.setIcon(new ImageIcon("C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//small-logo.png"));
+        String logoPath = "C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//small-logo.png";
+        logo.setIcon(new ImageIcon(logoPath));
         logo.setBounds(50, 20, 91, 59);
         menuPanel.add(logo);
 
         // Main Label
 
         mainLabel = new JLabel("Voting Menu");
-        mainLabel.setFont(new Font("Verdana", Font.BOLD, 18));
+        mainLabel.setFont(new Font("Verdana", Font.BOLD, 25));
         mainLabel.setBounds(220, 5, 300, 50);
         voterPanel.add(mainLabel);
 
@@ -122,32 +122,86 @@ public class VoterWindows {
         voterPanel.add(candParty3);
 
 
-        opt3 = new JRadioButton("McHenry Venaani");
-        opt3.setFont(new Font("Helvetica", Font.PLAIN, 12));
-        opt3.setBounds(240, 210, 20, 20);
-        opt3.setBackground(new Color(204, 255, 255));
-        voterPanel.add(opt3);
+            opt3 = new JRadioButton();
+            //opt3.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            opt3.setBounds(240, 210, 20, 20);
+            opt3.setBackground(new Color(204, 255, 255));
+            voterPanel.add(opt3);
 
         group = new ButtonGroup();
         group.add(opt1);
         group.add(opt2);
         group.add(opt3);
 
-        // Buttons
-        // //  Submit Vote
-        submit = new JButton("Submit");
-        submit.setFont(new Font("Verdana", Font.PLAIN, 12));
-        submit.setBounds(340, 290, 100, 30);
-        submit.addActionListener(
-                (ActionListener) e -> {
-                    // resets window to exclude voting buttons
-                    JLabel confirmation = new JLabel("Are you sure you want to vote for " + opt3.getText());
-                    confirmation.setFont(new Font("Helvetica", Font.PLAIN, 12));
-//                    confirmation.setBounds();
+            // Buttons
+            // //  Submit Vote
+            submit = new JButton("Submit");
+            submit.setFont(new Font("Verdana", Font.PLAIN, 12));
+            submit.setForeground(new Color(255, 255, 255));
+            submit.setBackground(new Color(0, 102, 153));
+            submit.setBounds(360, 290, 100, 30);
+            submit.setBorder(null);
+            submit.addActionListener(
+                    (ActionEvent e) -> {
+                        // resets window to exclude voting buttons
+                        PopUp.popUpMethod();
+                        yesOrNo = PopUp.yesOrNo;
+                        if (yesOrNo) {
+                            if (opt1.isSelected()) {
+                                MainClass.partyList.get(0).increaseCount(MainClass.userList.get(userIndex).votingDistric);
+                            } else if (opt2.isSelected()) {
+                                MainClass.partyList.get(1).increaseCount(MainClass.userList.get(userIndex).votingDistric);
+                            } else {
+                                MainClass.partyList.get(2).increaseCount(MainClass.userList.get(userIndex).votingDistric);
+                            }
+                            MainClass.userList.get(userIndex).hasVoted();
 
-                });
-        voterPanel.add(submit);
+                            voterPanel.remove(opt1);
+                            voterPanel.remove(opt2);
+                            voterPanel.remove(opt3);
+                        } else {
+                        }
+                        SwingUtilities.updateComponentTreeUI(voterFrame);
+                    });
+            voterPanel.add(submit);
+        } else {
+            youVoted = new JLabel("You Have Voted Already! Thanks for your vote");
+            youVoted.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            voterPanel.add(youVoted);
+            candidate1 = new JLabel("Katrina Hanse-Imarwa");
+            candidate1.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candidate1.setBounds(280, 125, 300, 30);
+            voterPanel.add(candidate1);
 
+
+            candParty1 = new JLabel("SWAPO");
+            candParty1.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candParty1.setBounds(440, 125, 300, 30);
+            voterPanel.add(candParty1);
+
+            candidate2 = new JLabel("Itula Panduleni");
+            candidate2.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candidate2.setBounds(280, 165, 300, 30);
+            voterPanel.add(candidate2);
+
+
+            candParty2 = new JLabel("IPC");
+            candParty2.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candParty2.setBounds(440, 165, 300, 30);
+            voterPanel.add(candParty2);
+
+            candidate3 = new JLabel("McHenry Venaani");
+            candidate3.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candidate3.setBounds(280, 205, 300, 30);
+            voterPanel.add(candidate3);
+
+
+            candParty3 = new JLabel("PDM");
+            candParty3.setFont(new Font("Helvetica", Font.PLAIN, 12));
+            candParty3.setBounds(440, 205, 300, 30);
+            voterPanel.add(candParty3);
+
+        }
         // // User profile
         profile = new JButton("My Profile");
         profile.setFont(new Font("Verdana", Font.PLAIN, 12));
@@ -180,75 +234,6 @@ public class VoterWindows {
                 });
         menuPanel.add(logout);
 
-//        System.out.println("\n++++++++++++++++++++++++++++++++++++++++++ \n" +
-//                "\t \t \t VoterWindows window");
-//        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        //MainClass mainObject = new MainClass();
-//       Scanner sc = new Scanner(System.in);
-//        System.out.println("\nChoose option:" +
-//                            "\n[1] Cast your vote" +
-//                            "\n[2] View all candidates" +
-//                            "\n[3] View Profile" +
-//                            "\n[4] Logout");
-
-//        int votersChoice = sc.nextInt();
-//        if (votersChoice==1) {
-//             System.out.println("\n \t \t Cast your vote" + "\n____________________________________");
-//             if (!MainClass.userList.get(MainClass.userIndex).votingStatus) {
-//                 for (int i = 0; i < MainClass.partyList.size( ); i++) {
-//                     System.out.println("\nParty Name: \t \t" + MainClass.partyList.get(i).partyName
-//                                      + "\nCandidate Name: \t" + MainClass.partyList.get(i).candidateName);
-//                     System.out.println("Choose " + "[" + (i + 1) + "]" + " to vote for this candidate");
-//                 }
-//
-//                //Enter authentication method
-//                int candidateOption = sc.nextInt();
-//                if (candidateOption == 1) {
-//                    MainClass.partyList.get(0).increaseCount(MainClass.userList.get(MainClass.userIndex).votingDistric);
-//                    System.out.println(MainClass.partyList.get(0).voteCount);
-//                    MainClass.userList.get(MainClass.userIndex).hasVoted();
-//                } else if (candidateOption==2) {
-//                    MainClass.partyList.get(1).increaseCount(MainClass.userList.get(MainClass.userIndex).votingDistric);
-//                    System.out.println(MainClass.partyList.get(1).voteCount);
-//                    MainClass.userList.get(MainClass.userIndex).hasVoted();
-//                } else if (candidateOption==3) {
-//                    MainClass.partyList.get(2).increaseCount(MainClass.userList.get(MainClass.userIndex).votingDistric);
-//                    System.out.println(MainClass.partyList.get(2).voteCount);
-//                    MainClass.userList.get(MainClass.userIndex).hasVoted();
-//                }
-//             }
-//
-//             // Allows user to go back to previous state/window
-//             System.out.println("\nSelect [a] to go back to previous window");
-//             String back = sc.next();
-//
-//             if (back.equals("a") || back.equals("A")) {
-//             voterWindow();
-//             } else {
-//             System.out.println("Invalid choice");
-//             voterWindow();
-//             }
-//
-//        }
-//
-//        else if (votersChoice==2) {
-//            CandidateInformation.candidateInformation();
-//        }
-//
-//        else if(votersChoice==3) {
-//            VoterInformation.votersInformation(MainClass.userList.get(MainClass.userIndex).name,
-//                                         MainClass.userList.get(MainClass.userIndex).surname,
-//                                         MainClass.userList.get(MainClass.userIndex).votingDistric,
-//                                         MainClass.userList.get(MainClass.userIndex).votingStatus);
-//        }
-//
-//        else if (votersChoice==4) {
-//            System.out.println("Logging out....");
-//
-//            // Goes back to login screen
-//            MainClass mainObject = new MainClass();
-//            mainObject.loginMethod();
-//        }
         voterFrame.setVisible(true);
     }
 }

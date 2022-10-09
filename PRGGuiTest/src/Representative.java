@@ -1,70 +1,119 @@
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class Representative {
-    public void repWindow() {
-        System.out.println("\n++++++++++++++++++++++++++++++++++++++++++ \n" +
-                "\t \t \tRepresentative Window");
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        Scanner sc2 = new Scanner(System.in);
+    public static JPanel repPanel;
+    public static JPanel menuPanel;
+    public static JFrame repFrame;
+    public static JLabel logo;
+    public static JLabel mainLabel;
+    public static JLabel separator;
+    public static JLabel instruction;
+    public static JButton summarizedStats;
+    public static JButton detStats;
+    public static JButton logout;
+    public static JLabel SWAPOstats;
+    public static JLabel IPCstats;
+    public static JLabel PDMstats;
 
-        System.out.println("\nChoose option: \n [1] View Election Statistics \n [2] Logout");
-        String rOption = sc2.next();
+    public static void repWindow() {
+        repPanel = new JPanel();
+        repPanel.setBackground(new Color(204, 255, 255));
 
-        if(rOption.equals("1")) {
-            System.out.println("\n++++++++++++++++++++++++++++++++++++ \n" +
-                    "\t \t Election Statistics" + "\n++++++++++++++++++++++++++++++++++++");
-            System.out.println("\nChoose option: \n [1] Summarized Statistics \n [2] Detailed Statistics \n");
-            String rStatOption = sc2.next();
+        menuPanel = new JPanel();
+        menuPanel.setBounds(0, 0, 190, 400);
+        menuPanel.setBackground(new Color(0, 102, 153));
+        menuPanel.setLayout(null);
 
-            if (rStatOption.equals("1")) {
-                for (int i = 0; i < MainClass.partyList.size(); i++) {
-                    System.out.println("\n \tParty Name: \t \t" + MainClass.partyList.get(i).partyName
-                                     + "\n \tCandidate Name: \t" + MainClass.partyList.get(i).candidateName
-                                     + "\n \tVotes: \t \t \t \t" + MainClass.partyList.get(i).voteCount);
-                    System.out.println("______________");
-                }
+        repFrame = new JFrame("Representative Menu");
+        repFrame.add(menuPanel);
 
-                // Allows user to go back to previous state/window
-                System.out.println("\nSelect [a] to go back to previous window");
-                String back = sc2.next();
+        repFrame.setSize(650, 400);
+        repFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        repFrame.add(repPanel);
 
-                if (back.equals("a") || back.equals("A")) {
-                    repWindow();
-                } else {
-                    System.out.println("Invalid choice");
-                    repWindow();
-                }
+        repPanel.setLayout(null);
 
-            } // Displays results per candidate per region
-                else if (rStatOption.equals("2")) {
-                for (int i = 0; i < MainClass.partyList.size(); i++) {
-                    System.out.println("\n \t \t Detailed Statistics" + "\n____________________________________");
-                    System.out.println("\nParty Name: \t \t" + MainClass.partyList.get(i).partyName
-                            + "\nCandidate Name: \t" + MainClass.partyList.get(i).candidateName
-                            + "\n \tNorthern Region: \t" + MainClass.partyList.get(i).northVotes
-                            + "\n \tCentral Region: \t" + MainClass.partyList.get(i).centralVotes
-                            + "\n \tSouthern Region: \t" + MainClass.partyList.get(i).southVotes
-                            + "\n \tCoastal Region: \t" + MainClass.partyList.get(i).coastVotes);
-                }
-            }
+        // Adds logo image
+        logo = new JLabel();
+        String logoPath = "C://Users//Chantelle van Wyk//Desktop//eVoting//PRGGuiTest//src//small-logo.png";
+        logo.setIcon(new ImageIcon(logoPath));
+        logo.setBounds(50, 20, 91, 59);
+        menuPanel.add(logo);
 
-            // Allows user to go back to previous state/window
-            System.out.println("\nSelect [a] to go back to previous window");
-            String back = sc2.next();
+        // Main Label
+        mainLabel = new JLabel("Representative Menu");
+        mainLabel.setFont(new Font("Verdana", Font.BOLD, 25));
+        mainLabel.setBounds(220, 5, 400, 50);
+        repPanel.add(mainLabel);
 
-            if (back.equals("a") || back.equals("A")) {
-                repWindow();
-            } else {
-                System.out.println("Invalid choice");
-                repWindow();
-            }
+        separator = new JLabel("_______________________________________________________");
+        separator.setBounds(220, 73, 400, 20);
+        repPanel.add(separator);
 
-        } else if (rOption.equals("2")) {
-            System.out.println("Logging out....");
+        instruction = new JLabel("See summarized voting statistics below");
+        instruction.setFont(new Font("Verdana", Font.PLAIN, 11));
+        instruction.setBounds(220, 35, 350, 50);
+        repPanel.add(instruction);
 
-            // Goes back to Login screen
-            MainClass mainObject = new MainClass();
-            mainObject.loginMethod();
-        }
+        // Buttons
+        // // Detailed stats
+        detStats = new JButton("Detailed Stats");
+        detStats.setFont(new Font("Verdana", Font.PLAIN, 12));
+        detStats.setBounds(25, 170, 140, 30);
+        detStats.addActionListener(
+                (ActionListener) e -> {
+                    // redirect to detailed stats window
+                    detailedVotes.detailedVoteScreen();
+                    repFrame.dispose();
+                });
+        menuPanel.add(detStats);
+
+        // // Logout
+        logout = new JButton("Log Out");
+        logout.setFont(new Font("Verdana", Font.PLAIN, 12));
+        logout.setBounds(25, 220, 140, 30);
+        logout.addActionListener(
+                (ActionListener) e -> {
+                    MainClass.loginMethod();
+                    repFrame.dispose();
+                });
+        menuPanel.add(logout);
+
+        // SWAPO Votes
+        JLabel SWAPO = new JLabel(MainClass.partyList.get(0).partyName);
+        SWAPO.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        SWAPO.setBounds(320,130,300,30);
+        repPanel.add(SWAPO);
+
+        SWAPOstats = new JLabel();
+        SWAPOstats.setText(String.valueOf(MainClass.partyList.get(0).voteCount));
+        SWAPOstats.setBounds(280,130,150,30);
+        repPanel.add(SWAPOstats);
+
+        // IPC Votes
+        JLabel IPC = new JLabel(MainClass.partyList.get(1).partyName);
+        IPC.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        IPC.setBounds(320,180,300,30);
+        repPanel.add(IPC);
+
+        IPCstats = new JLabel();
+        IPCstats.setText(String.valueOf(MainClass.partyList.get(1).voteCount));
+        IPCstats.setBounds(280,180,150,30);
+        repPanel.add(IPCstats);
+
+        // PDM Votes
+        JLabel PDM = new JLabel(MainClass.partyList.get(2).partyName);
+        PDM.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        PDM.setBounds(320,230,300,30);
+        repPanel.add(PDM);
+
+        PDMstats = new JLabel();
+        PDMstats.setText(String.valueOf(MainClass.partyList.get(2).voteCount));
+        PDMstats.setBounds(280,230,150,30);
+        repPanel.add(PDMstats);
+
+        repFrame.setVisible(true);
     }
 }

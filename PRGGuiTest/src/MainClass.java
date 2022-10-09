@@ -17,11 +17,39 @@ public class MainClass implements ActionListener {
     public static user user2 = new user
             ("Chantelle",
                     "Van Wyk",
-                    "chants",
-                    "vanwyk111",
-                    "rep",
+                    "c",
+                    "v",
+                    "Rep",
                     null,
                     false);
+
+    public static user user3 = new user
+            ("Mike",
+                    "Jonas",
+                    "j",
+                    "m",
+                    "voter",
+                    "North",
+                    false);
+
+    public static user user4 = new user
+            ("Sarah",
+                    "Beukes",
+                    "s",
+                    "b",
+                    "voter",
+                    "South",
+                    false);
+
+    public static user user5 = new user
+            ("Matthew",
+                    "Kotze",
+                    "m",
+                    "k",
+                    "voter",
+                    "Coast",
+                    false);
+
     public static ArrayList<user> userList = new ArrayList<user>();
     public static party SWAPO = new party
             ("South West Africa People's Organisation",
@@ -66,22 +94,33 @@ public class MainClass implements ActionListener {
     public static JLabel uNameLabel;
     public static JLabel pwLabel;
     public static JLabel image;
-public static JFrame loginFrame;
+    public static JPanel titlePanel;
+    public static JFrame loginFrame;
+
     public static void loginMethod() {
         userList.add(user1);
         userList.add(user2);
+        userList.add(user3);
+        userList.add(user4);
+        userList.add(user5);
         partyList.add(SWAPO);
         partyList.add(IPC);
         partyList.add(PDM);
 
         loginPanel = new JPanel();
-        loginPanel.setBackground(new Color(204,255,255));
+        loginPanel.setBackground(new Color(204, 255, 255));
+        loginPanel.setLayout(null);
+
+        titlePanel = new JPanel();
+        titlePanel.setBackground(new Color(0, 102, 153));
+        titlePanel.setBounds(313, 0, 10, 370);
+        titlePanel.setLayout(null);
+
         loginFrame = new JFrame("Login");
+        loginFrame.add(titlePanel);
 
         loginFrame.setSize(650, 370);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        loginPanel.setLayout(null);
         loginFrame.add(loginPanel);
 
         image = new JLabel();
@@ -90,37 +129,44 @@ public static JFrame loginFrame;
         loginPanel.add(image);
 
         title = new JLabel("Login");
-        title.setFont(new Font("Verdana", Font.BOLD, 18));
-        title.setBounds(340, 15, 120, 30);
+        title.setFont(new Font("Verdana", Font.BOLD, 30));
+        title.setForeground(new Color(0, 102, 153));
+        title.setBounds(350, 35, 120, 50);
         loginPanel.add(title);
 
         uNameLabel = new JLabel("Username:");
         uNameLabel.setFont(new Font("Helvetica", Font.PLAIN, 12));
-        uNameLabel.setBounds(340, 100, 120, 30);
+        uNameLabel.setBounds(350, 120, 120, 30);
         loginPanel.add(uNameLabel);
-
 
         pwLabel = new JLabel("Password:");
         pwLabel.setFont(new Font("Helvetica", Font.PLAIN, 12));
-        pwLabel.setBounds(340, 140, 120, 30);
+        pwLabel.setBounds(350, 160, 120, 30);
         loginPanel.add(pwLabel);
 
         uName = new JTextField();
-        uName.setBounds(420, 105, 170, 25);
+        uName.setBounds(430, 125, 170, 25);
+        uName.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        uName.setBackground(new Color(204, 255, 255));
         loginPanel.add(uName);
 
         uPass = new JPasswordField();
-        uPass.setBounds(420, 145, 170, 25);
+        uPass.setBounds(430, 165, 170, 25);
+        uPass.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        uPass.setBackground(new Color(204, 255, 255));
         loginPanel.add(uPass);
 
         invalid = new JLabel();
-        invalid.setBounds(50,50,200,25);
+        invalid.setBounds(430, 300, 200, 25);
         invalid.setForeground(Color.red);
         loginPanel.add(invalid);
 
         submit = new JButton("Submit");
         submit.setFont(new Font("Verdana", Font.PLAIN, 12));
-        submit.setBounds(430, 200, 100, 30);
+        submit.setForeground(new Color(255, 255, 255));
+        submit.setBackground(new Color(0, 102, 153));
+        submit.setBounds(430, 240, 100, 30);
+        submit.setBorder(null);
         submit.addActionListener(new MainClass());
         loginPanel.add(submit);
 
@@ -134,6 +180,7 @@ public static JFrame loginFrame;
         String user = uName.getText();
         String pw = String.valueOf(uPass.getPassword());
 
+
         for (int i = 0; i < userList.size(); i++)
         {
             if (user.equals(userList.get(i).username) && pw.equals(userList.get(i).password))
@@ -143,23 +190,21 @@ public static JFrame loginFrame;
                 if (userList.get(i).role.equals("voter"))
                 {
                     System.out.println("You are a voter");
-                    System.out.println(userIndex);
 
                     // Navigates to the voting page
-                    VoterWindows voterWindowsObject = new VoterWindows();
-                    voterWindowsObject.voterWindow();
+                    VoterWindows.voterWindow();
                     loginFrame.dispose();
                     break;
-                } else if (userList.get(i).role.equals("Rep"))
-                {
+
+                } else if (userList.get(i).role.equals("Rep")) {
+                    System.out.println("You are a representative");
+
                     // Navigates to the representative page
-                    Representative repObject = new Representative();
-                    repObject.repWindow();
+                    Representative.repWindow();
                     loginFrame.dispose();
-                }
-                else
-                {
-                    invalid.setText("Invalid Entry");
+                    break;
+                } else {
+                    invalid.setText("error");
                 }
             }
         }
